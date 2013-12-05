@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import beanPackage.QuestionSumme;
-import beanPackage.TextErgebnis;
+import beanPackage.QuestionSum;
+import beanPackage.TextResult;
 
 /**
  * Servlet implementation class Controller
@@ -23,19 +23,16 @@ public class Controller extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest myRequest, HttpServletResponse myResponse) throws ServletException, IOException {
-	    
-		//Fehler abfangen
-		
-		
+	
 		//Ermittlung des Ergebnisses
-	    int mySummeQuestions = new QuestionSumme().addition(myRequest);
+	    int mySumQuestions = new QuestionSum().addition(myRequest);
 	    
 	    //Ausgabetext holen
-	    String tempAusgabe = new TextErgebnis().ausgabeText(mySummeQuestions);
+	    String outputResult = new TextResult().outputText(mySumQuestions);
 		
 	    //Weiterleitung des Ergebnisses und des Textes an result.jsp
-		myRequest.setAttribute("summe", mySummeQuestions);
-		myRequest.setAttribute("summentext", tempAusgabe);
+		myRequest.setAttribute("sum", mySumQuestions);
+		myRequest.setAttribute("outputResult", outputResult);
 		RequestDispatcher rdp = myRequest.getRequestDispatcher("result.jsp");
 		rdp.forward(myRequest, myResponse);
 		
