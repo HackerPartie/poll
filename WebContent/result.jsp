@@ -15,8 +15,8 @@
 <div id="box_1">
 	<% 
 		out.println("Hallo " + request.getParameter("txtUsername") + ", Sie haben " 
-	 	+ request.getAttribute("summe") + " Punkte erreicht.");
-		out.println("<br><br>" + request.getAttribute("summentext"));
+	 	+ request.getAttribute("sum") + " Punkte erreicht.");
+		out.println("<br><br>" + request.getAttribute("outputResult"));
 	%>
 </div>
 

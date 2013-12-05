@@ -3,7 +3,7 @@ package beanPackage;
 import javax.servlet.http.HttpServletRequest;
 
 
-public class QuestionSumme {
+public class QuestionSum {
 	
 	public int addition(HttpServletRequest myRequest) {
 		
@@ -32,14 +32,14 @@ public class QuestionSumme {
 			int intQ9 = Integer.parseInt(tempQuestion9);
 
 			// Summenbildung
-			int summeQuestions = intQ1 + intQ2 + intQ3 + intQ4 + intQ5 + intQ6
+			int sumQuestions = intQ1 + intQ2 + intQ3 + intQ4 + intQ5 + intQ6
 					+ intQ7 + intQ8 + intQ9;
 
-			return summeQuestions;
+			return sumQuestions;
 			
 		} catch (Exception e) {
-			int summeQuestions = 0;
-			return summeQuestions;
+			int sumQuestions = 0;
+			return sumQuestions;
 
 		}
 
