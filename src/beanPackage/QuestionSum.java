@@ -6,8 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 public class QuestionSum {
 	
 	private int sumQuestions;
-	private int wrongAnswers = 0;
+	private int[] wrongAnswers ={0,0,0,0,0,0,0,0,0};
 	private int[] myIntAnswers = new int[9];
+	int y = 0;
 	
 	public void addition(HttpServletRequest myRequest) {
 		
@@ -31,15 +32,17 @@ public class QuestionSum {
 				
 			//falls eine Frage nicht beantwortet wurde, wird Wert auf 0 gesetzt
 			} catch (Exception e) {
-				wrongAnswers = i+1;
+				wrongAnswers[i] = i+1;
 			}
 
 		}
 	}
 
-	public int getWrongAnswers() {
+	public int[] getWrongAnswers() {
 		return wrongAnswers;
 	}
+
+
 
 	public int getSumQuestions() {
 		return sumQuestions;

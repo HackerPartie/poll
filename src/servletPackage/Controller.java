@@ -25,24 +25,18 @@ public class Controller extends HttpServlet {
 	protected void doPost(HttpServletRequest myRequest, HttpServletResponse myResponse) throws ServletException, IOException {
 	
 		QuestionSum myQuestionSum = new QuestionSum();
-		String outputResult;
 		
 		//Ermittlung des Ergebnisses
 		myQuestionSum.addition(myRequest);
 		int mySumQuestions = myQuestionSum.getSumQuestions();
 	    
 	    //Fehlende Antworten
-	    int pWrong = myQuestionSum.getWrongAnswers();
+		int[] pWrong = myQuestionSum.getWrongAnswers();
+
 	    
 	    //Ausgabetext holen
-	    if (pWrong == 0) {
-		    outputResult = new TextResult().outputText(mySumQuestions);
-		} else {
-			outputResult = new TextResult().outputTextError(mySumQuestions, pWrong);
-
-		}
-
-		
+		String outputResult = new TextResult().outputText(mySumQuestions, pWrong);
+	
 	    //Weiterleitung des Ergebnisses und des Textes an result.jsp
 		myRequest.setAttribute("sum", mySumQuestions);
 		myRequest.setAttribute("outputResult", outputResult );
