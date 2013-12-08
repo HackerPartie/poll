@@ -8,7 +8,6 @@ public class QuestionSum {
 	private int sumQuestions;
 	private int[] wrongAnswers ={0,0,0,0,0,0,0,0,0};
 	private int[] myIntAnswers = new int[9];
-	int y = 0;
 	
 	public void addition(HttpServletRequest myRequest) {
 		

@@ -30,7 +30,7 @@ public class Controller extends HttpServlet {
 		myQuestionSum.addition(myRequest);
 		int mySumQuestions = myQuestionSum.getSumQuestions();
 	    
-	    //Fehlende Antworten
+	    //Fehlende Antworten ermitteln
 		int[] pWrong = myQuestionSum.getWrongAnswers();
 
 	    

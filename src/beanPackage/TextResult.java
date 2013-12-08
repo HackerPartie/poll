@@ -9,25 +9,20 @@ public class TextResult {
 		int sumResult = pSum;
 		String test ="";
 		
-		//Die nicht beantworteten Fragen aus pWrong ermitteln
-//		try {
-			int[] wrong = new int [pWrong.length];
-			System.arraycopy(pWrong, 0, wrong, 0, wrong.length);
+		//Die Fragen ohne Antwort
+		int[] wrong = new int [pWrong.length];
+		//Arraykopie
+		System.arraycopy(pWrong, 0, wrong, 0, wrong.length);
 			
-			for (int i : wrong) {
-				if (i == 0) {
-					//do nothing
-				} else{
-					test += i + ", ";
-				}
-
+		for (int i : wrong) {
+			if (i == 0) {
+				//do nothing
+			} else{
+				test += i + ", ";
 			}
-			
-//		} catch (Exception e) {
-//			// TODO: nix
-//		}
 
-		
+		}
+	
 		String text1 = "Sie f&uuml;hlen sich eventuell schon seit L&auml;ngerem nicht wirklich fit und " +
 				"gesund. Liegt es an der unmittelbaren Gestaltung Ihres Arbeitsplatzes, wie schlechte " +
 				"Luft, falscher Sessel oder falsche PC-Einstellung? Oder geht das Ganze tiefer? " +
