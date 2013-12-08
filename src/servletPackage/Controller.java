@@ -24,15 +24,28 @@ public class Controller extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest myRequest, HttpServletResponse myResponse) throws ServletException, IOException {
 	
+		QuestionSum myQuestionSum = new QuestionSum();
+		String outputResult;
+		
 		//Ermittlung des Ergebnisses
-	    int mySumQuestions = new QuestionSum().addition(myRequest);
+		myQuestionSum.addition(myRequest);
+		int mySumQuestions = myQuestionSum.getSumQuestions();
+	    
+	    //Fehlende Antworten
+	    int pWrong = myQuestionSum.getWrongAnswers();
 	    
 	    //Ausgabetext holen
-	    String outputResult = new TextResult().outputText(mySumQuestions);
+	    if (pWrong == 0) {
+		    outputResult = new TextResult().outputText(mySumQuestions);
+		} else {
+			outputResult = new TextResult().outputTextError(mySumQuestions, pWrong);
+
+		}
+
 		
 	    //Weiterleitung des Ergebnisses und des Textes an result.jsp
 		myRequest.setAttribute("sum", mySumQuestions);
-		myRequest.setAttribute("outputResult", outputResult);
+		myRequest.setAttribute("outputResult", outputResult );
 		RequestDispatcher rdp = myRequest.getRequestDispatcher("result.jsp");
 		rdp.forward(myRequest, myResponse);
 		
