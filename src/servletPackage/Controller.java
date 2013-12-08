@@ -43,6 +43,10 @@ public class Controller extends HttpServlet {
 		RequestDispatcher rdp = myRequest.getRequestDispatcher("result.jsp");
 		rdp.forward(myRequest, myResponse);
 		
+		//Datensatz abspeichern
+		
+		//Average ermitteln
+		
 	}
 
 }

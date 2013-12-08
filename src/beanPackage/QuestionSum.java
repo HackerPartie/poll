@@ -25,12 +25,12 @@ public class QuestionSum {
 
 		for (int i = 0; i < myArrayAnswers.length; i++) {
 			try {
-				//Umwandlung der Strings in Integer-Zahlen
+				//Umwandlung der Strings in Integer-Zahlen und Summenbildung
 				myIntAnswers[i]= Integer.parseInt(myArrayAnswers[i]);
 				sumQuestions += myIntAnswers[i];
 				
-			//falls eine Frage nicht beantwortet wurde, wird Wert auf 0 gesetzt
-			} catch (Exception e) {
+			//falls eine Frage nicht beantwortet wurde, wird die Zahl der Frage gespeichert
+			} catch (Exception error) {
 				wrongAnswers[i] = i+1;
 			}
 

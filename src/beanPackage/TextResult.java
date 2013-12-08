@@ -7,9 +7,9 @@ public class TextResult {
 	public String outputText(int pSum, int[] pWrong){
 		
 		int sumResult = pSum;
-		String test ="";
+		String wrongAnswers ="";
 		
-		//Die Fragen ohne Antwort
+		//Abfrage der Fragen ohne Antworten
 		int[] wrong = new int [pWrong.length];
 		//Arraykopie
 		System.arraycopy(pWrong, 0, wrong, 0, wrong.length);
@@ -18,7 +18,7 @@ public class TextResult {
 			if (i == 0) {
 				//do nothing
 			} else{
-				test += i + ", ";
+				wrongAnswers += i + ", ";
 			}
 
 		}
@@ -43,16 +43,13 @@ public class TextResult {
 		String text4 = "Ganz grauslicher Fehler!";
 		
 		String text5 = "Das Ergebnis ist nicht aussagekr&auml;ftig, da Sie folgenden Frage(n) nicht " +
-				"beantwortet haben: "  + test + ". <br>Bitte wiederholen Sie den Test.";
+				"beantwortet haben: "  + wrongAnswers + ". <br>Bitte wiederholen Sie den Test.";
 		
-		//Wenn eine Frage nicht beantwortet wurden
-		if (test != ""){
+		//wenn Fragen nicht beantwortet wurden
+		if (wrongAnswers != ""){
 			return text5;
 		}
-		//alle Fragen wurden beantwortet
-		else if (sumResult <9){
-			return text4;
-		}
+		//wenn alle Fragen beantwortet wurden
 		else if (sumResult <=17){
 			return text1;
 		}
