@@ -44,8 +44,10 @@ public class Controller extends HttpServlet {
 		rdp.forward(myRequest, myResponse);
 		
 		//Datensatz abspeichern
+		//noch ausstaendig
 		
 		//Average ermitteln
+		//noch ausstaendig
 		
 	}
 
