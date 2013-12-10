@@ -12,11 +12,17 @@
 	<%@include file="include/header.jsp" %>
 	<span id="navigation"><%@include file="include/navigation.jsp" %></span>
 </div>
-<div id="box_1">
+<div id="box_1" class="box">
 	<% 
 		out.println("Hallo " + request.getParameter("txtUsername") + ", Sie haben " 
 	 	+ request.getAttribute("sum") + " Punkte erreicht.");
 		out.println("<br><br>" + request.getAttribute("outputResult"));
+	%>
+</div>
+
+<div class="box">
+	<%
+		out.println("The average result is: " + request.getParameter("arg0"));
 	%>
 </div>
 

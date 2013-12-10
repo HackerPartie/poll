@@ -13,7 +13,7 @@
 	<span id="navigation"><%@include file="include/navigation.jsp" %></span>
 </div>
 
-<div id="box_1">
+<div class="box">
 	<h3>Imprint</h3>
 	<span>
 		This is just a trial
