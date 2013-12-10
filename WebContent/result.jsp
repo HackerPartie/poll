@@ -17,6 +17,9 @@
 		out.println("Hallo " + request.getParameter("txtUsername") + ", Sie haben " 
 	 	+ request.getAttribute("sum") + " Punkte erreicht.");
 		out.println("<br><br>" + request.getAttribute("outputResult"));
+		
+		out.println("<br><br>Die durchschnittlich erreichte Punkteanzahl " +
+				"liegt bei " + request.getAttribute("average") + " Punkten.");
 	%>
 </div>
 
