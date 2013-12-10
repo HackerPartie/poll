@@ -43,7 +43,7 @@ public class Controller extends HttpServlet {
 
 		//Datensatz abspeichern
 		Person myPerson = new Person();
-		myPerson.savePersonScore(userName, intQ[0], intQ[1], intQ[2], intQ[3], intQ[4], intQ[5], intQ[6], intQ[7], intQ[8], mySumQuestions);
+		myPerson.savePersonScore(userName, intQ, mySumQuestions);
 	    
 	    //Fehlende Antworten ermitteln
 		int[] pWrong = myQuestionSum.getWrongAnswers();
