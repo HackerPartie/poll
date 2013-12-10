@@ -46,6 +46,12 @@ public class QuestionSum {
 	public int getSumQuestions() {
 		return sumQuestions;
 	}
+
+	public int[] getMyIntAnswers() {
+		return myIntAnswers;
+	}
+	
+	
 	
 	
 	

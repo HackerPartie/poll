@@ -17,4 +17,5 @@ public class Person {
 	public double getAverage(){
 		return 25.0;
 	}
+	
 }
