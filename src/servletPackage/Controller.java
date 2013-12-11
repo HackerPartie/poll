@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import beanPackage.QuestionSum;
+import databasePackage.Person;
+
+import beanPackage.SumAndSave;
 import beanPackage.TextResult;
 
 /**
@@ -24,31 +26,22 @@ public class Controller extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest myRequest, HttpServletResponse myResponse) throws ServletException, IOException {
 	
-		QuestionSum myQuestionSum = new QuestionSum();
+		SumAndSave mySumAndSave = new SumAndSave();
 		
-		//Ermittlung des Ergebnisses
-		myQuestionSum.addition(myRequest);
-		int mySumQuestions = myQuestionSum.getSumQuestions();
-	    
-	    //Fehlende Antworten ermitteln
-		int[] pWrong = myQuestionSum.getWrongAnswers();
-
-	    
+		//Punkteanzahl ermitteln und Datensatz abspeichern
+		mySumAndSave.additionAndSave(myRequest);
+		int mySumQuestions = mySumAndSave.getSumQuestions();
+		
 	    //Ausgabetext holen
-		String outputResult = new TextResult().outputText(mySumQuestions, pWrong);
+		String outputResult = new TextResult().outputText(mySumQuestions, mySumAndSave.getTxtWrongAnswers());
 	
-	    //Weiterleitung des Ergebnisses und des Textes an result.jsp
+	    //Weiterleitung des Ergebnisses, des Textes und dem Durchschnitt an result.jsp
 		myRequest.setAttribute("sum", mySumQuestions);
 		myRequest.setAttribute("outputResult", outputResult );
+		myRequest.setAttribute("average", new Person().getAverage());
 		RequestDispatcher rdp = myRequest.getRequestDispatcher("result.jsp");
 		rdp.forward(myRequest, myResponse);
-		
-		//Datensatz abspeichern
-		//noch ausstaendig
-		
-		//Average ermitteln
-		//noch ausstaendig
-		
+				
 	}
 
 }
