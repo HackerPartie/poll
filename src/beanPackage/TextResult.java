@@ -4,25 +4,11 @@ public class TextResult {
 	
 	
 	
-	public String outputText(int pSum, int[] pWrong){
+	public String outputText(int pSum, String pWrong){
 		
 		int sumResult = pSum;
-		String wrongAnswers ="";
-		
-		//Abfrage der Fragen ohne Antworten
-		int[] wrong = new int [pWrong.length];
-		//Arraykopie
-		System.arraycopy(pWrong, 0, wrong, 0, wrong.length);
-			
-		for (int i : wrong) {
-			if (i == 0) {
-				//do nothing
-			} else{
-				wrongAnswers += i + ", ";
-			}
+		String wrongAnswers = pWrong;
 
-		}
-	
 		String text1 = "Sie f&uuml;hlen sich eventuell schon seit L&auml;ngerem nicht wirklich fit und " +
 				"gesund. Liegt es an der unmittelbaren Gestaltung Ihres Arbeitsplatzes, wie schlechte " +
 				"Luft, falscher Sessel oder falsche PC-Einstellung? Oder geht das Ganze tiefer? " +
