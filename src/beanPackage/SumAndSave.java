@@ -8,7 +8,6 @@ import databasePackage.Person;
 public class SumAndSave {
 	
 	private int sumQuestions;
-	private int[] wrongAnswers ={0,0,0,0,0,0,0,0,0};
 	private int[] myIntAnswers = new int[9];
 	private String txtWrongAnswers ="";
 
@@ -34,29 +33,19 @@ public class SumAndSave {
 				myIntAnswers[i]= Integer.parseInt(myArrayAnswers[i]);
 				sumQuestions += myIntAnswers[i];
 				
-			//falls eine Frage nicht beantwortet wurde -> Abspeichern des IndexPlatzes
-			//und der Wert wird auf 0 gesetzt
+			//falls eine Frage nicht beantwortet wurde -> Nummer der Frage wird in String für Ausgabetext gespeichert
 			} catch (Exception error) {
-				wrongAnswers[i] = i+1;
-				myIntAnswers[i] = 0;
+				txtWrongAnswers += i+1 + ", ";
 			}
-
 		}
 		
-		//Zusammenfassen der nicht-geklickten Antwortnummern in einen String für den Ausgabetext				
-		for (int i : wrongAnswers) {
-			if (i == 0) {
-				//do nothing
-			} else{
-				txtWrongAnswers += i + ", ";
-			}
-		}
 		
 		//User-Name uebernehmen
 		String userName = myRequest.getParameter("txtUsername");
 		
 		//Sicherstellen, dass Datensaetze nur gespeichert werden, wenn alle Fragen beantwortet wurden
 		if (txtWrongAnswers.equals("")) {
+			//Speichern in die Datenbank
 			new Person().savePersonScore(userName, myIntAnswers, sumQuestions);
 		}
 	}
