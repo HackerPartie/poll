@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <link rel="stylesheet" href="include/style.css" type="text/css" />
 <title>Arbeitsplatz</title>
 </head>
 <body>
-<div id="header">
+<div class="header">
 	<%@include file="include/header.jsp" %>
-	<span id="navigation"><%@include file="include/navigation.jsp" %></span>
+	<span class="navigation"><%@include file="include/navigation.jsp" %></span>
 </div>
-<div id="container">
+<div class="container">
 <h3> Wie gesund ist mein Arbeitsplatz?</h3>
 
 <p>Brennen Ihre Augen, schmerzt der R&uuml;cken nach einem Tag im B&uuml;ro? 

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -8,26 +8,25 @@
 <title>Arbeitsplatz</title>
 </head>
 <body>
-<div id="header">
+<div class="header">
 	<%@include file="include/header.jsp" %>
-	<span id="navigation"><%@include file="include/navigation.jsp" %></span>
+	<span class="navigation"><%@include file="include/navigation.jsp" %></span>
 </div>
-<div id="box_1" class="box">
+<div class="box">
 	<% 
 		out.println("Hallo " + request.getParameter("txtUsername") + ", Sie haben " 
 	 	+ request.getAttribute("sum") + " Punkte erreicht.");
 		out.println("<br><br>" + request.getAttribute("outputResult"));
-		
+	%>
+</div>
+<div class="box">
+		<% 	
 		out.println("<br><br>Die durchschnittlich erreichte Punkteanzahl " +
 				"liegt bei " + request.getAttribute("average") + " Punkten.");
-	%>
+	  %>
 </div>
 
-<div class="box">
-	<%
-		out.println("The average result is: " + request.getParameter("arg0"));
-	%>
-</div>
+
 
 </body>
 </html>
