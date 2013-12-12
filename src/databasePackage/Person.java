@@ -4,142 +4,152 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
- * @author manu
+ * - Verbindungsaufbau zur Datenbank (poll.person)
+ * - Speichern des Datensatz in die Datenbank
+ * - Ermittlung des Durchschnitts der Punkteanzahlen
+ * 
+ * @author manu & bergsocke
  * 
  */
 
 public class Person {
-
-	private Connection connect = null;
-	private Statement statement = null;
-	private PreparedStatement preparedStatement = null;
-	private ResultSet resultSet = null;
 	
-	// count the number of saved persons,
-	//  ie count number of row in the person TABLE
-	private int numRows;
-	private int[] allScores;
-	double sumAllScores;
-	
-	/*
-	 * put the stuff in the database aka INSERT INTO person VALUES (default,
-	 * 'lars', 1 , 2, 3, 1, 2, 3, 1, 2, 3, 18);
-	 */
-	public void savePersonScore(String personName, int[] personAnswers,
-			int personSum) {
+	private Connection connect = null;	
+	private PreparedStatement preparedStatementSave = null;	
+	private ResultSet resultSetRows = null;
+	private PreparedStatement preparedStatementsRows = null;
+	private ResultSet resultSetRowsQsum = null;
+	private PreparedStatement preparedStatementsQsum = null;
 
+	//Verbindungsaufbau zur Datenbank
+	public void connectDB() {
+		
 		try {
-			// load the jdbc driver
+			//Treiber laden + beim DriverManager registrieren
 			Class.forName("com.mysql.jdbc.Driver");
 
-			// establish a TCP/IP connection with mysql
-			connect = DriverManager.getConnection(
-					"jdbc:mysql://localhost/poll", "polluser", "pollpassword");
-
-			// create a preparedStatement object, which is going to hold our SQL
-			// statement
-			preparedStatement = connect
-					.prepareStatement("INSERT INTO person VALUES(default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-
-			// fill the SQL query with the paramaters we want to save,
-			// starting with the personName in the first ? placeholder from
-			// above
-			preparedStatement.setString(1, personName);
-
-			// this would boring
-			// preparedStatement.setInt(2, personAnswers[0]);
-			// preparedStatement.setInt(3, personAnswers[1]);
-			// so we do it a loop
-			for (int i = 0; i < personAnswers.length; i++) {
-				preparedStatement.setInt(i + 2, personAnswers[i]);
-			}
-
-			// add the score as the last parameter
-			preparedStatement.setInt(11, personSum);
-
-			// execute the SQL statement
-			preparedStatement.executeUpdate();
+			//DriverManager verwenden + Verbindung zur DB aufbauen
+			connect = DriverManager.getConnection("jdbc:mysql://localhost/poll", "polluser", "pollpassword");			
 
 		} catch (Exception e) {
 			System.out.println(e.toString());
 		}
+		
+	}
+	
+
+	//Speichert Datensatz in die Datenbank
+	public void savePersonScore(String personName, int[] personAnswers, int personSum) {
+		
+		try {
+			//Datenbankverbindung
+			this.connectDB();
+			
+			//PreparedStatement für SQL-Befehl
+			preparedStatementSave = connect.prepareStatement("INSERT INTO person VALUES(default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			
+			//Namen setzen
+			preparedStatementSave.setString(1, personName);
+
+			//Antworten setzen
+			for (int i = 0; i < personAnswers.length; i++) {
+				preparedStatementSave.setInt(i + 2, personAnswers[i]);
+			}
+
+			//Punkteanzahl setzen
+			preparedStatementSave.setInt(11, personSum);
+
+			//Ausfuehren des Speichern
+			preparedStatementSave.executeUpdate();
+			
+
+		} catch (Exception e) {
+			System.out.println(e.toString());
+			
+		} finally {
+			close();
+		}	
 
 	}
 	
 	// get the average of all saved scores
 	public double getAverage() {
+
+		double numRows = 0.0;    //Anzahl der Datensaetze
+		double allScores = 0.0;  //Summe der Punkteanzahl
+		double average = 0.0;    //Durchschnitt
+		
 		try {
+			//Datenbankverbindung
+			this.connectDB();
+					
+			//Anzahl der Datensaetze ermitteln
+			preparedStatementsRows = connect.prepareStatement("SELECT COUNT(*) FROM person");
+			resultSetRows = preparedStatementsRows.executeQuery();
 			
-			// load the jdbc driver
-			Class.forName("com.mysql.jdbc.Driver");
-
-			// establish a TCP/IP connection with mysql
-			connect = DriverManager.getConnection(
-					"jdbc:mysql://localhost/poll", "polluser", "pollpassword");
-
-			// create a preparedStatement object, which is going to hold our SQL statement			
-			// count the number of saved persons,
-			//  ie count number of row in the person TABLE
-			preparedStatement = connect
-					.prepareStatement("SELECT COUNT(*) FROM person");
-			resultSet = preparedStatement.executeQuery();
-			
-			while (resultSet.next()) {
-				numRows = resultSet.getInt("count(*)");
-			}
-			
-			// now we get to retrieve the score of all persons in the table
-			// to save the scores we initialize an int array of the size of the table person itself
-			allScores = new int[numRows];
-			preparedStatement = connect.prepareStatement("SELECT qsum FROM person;");
-			resultSet = preparedStatement.executeQuery();
-			
-			while (resultSet.next()) {
-				allScores[resultSet.getRow()-1] = resultSet.getInt("qsum");	
-			}
-			
-			// print the content of our array
-			for (int i = 0; i < allScores.length; i++) {
-				sumAllScores += allScores[i];
+			while (resultSetRows.next()) {
+				numRows = resultSetRows.getInt("count(*)");
 			}
 						
-			return sumAllScores / allScores.length;
-									
+			//Gesamtsumme der Punkteanzahl ermitteln
+			preparedStatementsQsum = connect.prepareStatement("SELECT qsum FROM poll.person");
+			resultSetRowsQsum = preparedStatementsQsum.executeQuery();
+			
+			while (resultSetRowsQsum.next()) {
+				int tempSum = resultSetRowsQsum.getInt("qsum");	
+				allScores += tempSum;
+			}
+			
+			//Durchschnitt errechnen
+			average = allScores/numRows;
+			
+			//Durchschnitt runden auf 2 Nachkommastellen
+			average = Math.round(average*100.)/100.;
+			
+			return average;
+			
+		} catch (Exception e) {
+			return 0.0;
+			
+		} finally {
+			close();
+		}						
+	}
+	
+	
+	private void close() {
+		try {
+			
+			if (resultSetRows != null) {
+				resultSetRows.close();
+			}
+			
+			if (resultSetRowsQsum != null) {
+				resultSetRowsQsum.close();
+			}
+			
+			if (preparedStatementSave != null) {
+				preparedStatementSave.close();
+			}
+			
+			if (preparedStatementsRows != null) {
+				preparedStatementsRows.close();
+			}
+			
+			if (preparedStatementsQsum != null) {
+				preparedStatementsQsum.close();
+			}
+
+			if (connect != null) {
+				connect.close();
+			}
 			
 		} catch (Exception e) {
 			System.out.println(e.toString());
-			return -1;
-		}
-	}
-	
-	/*
-	 *  a debug method, available only the inside package scope 
-	 */
-	 void displayAll() {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			connect = DriverManager.getConnection(
-					"jdbc:mysql://localhost/poll", "polluser", "pollpassword");
-			statement = connect.createStatement();
-			resultSet = statement.executeQuery("SELECT * FROM person");
-			writeResultSet(resultSet);
-		} catch (Exception e) {
-			System.out.println(e.toString());
-		}
-	}
-	
-	private void writeResultSet(ResultSet resultSet) throws SQLException {
-		while (resultSet.next()) {
-			String name = resultSet.getString("NAME");
-			String qsum = resultSet.getString("qsum");
-			System.out.println("Person Name: " + name);
-			System.out.println("Person Score: " + qsum);
 
 		}
 	}
-
+		
 }
