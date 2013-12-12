@@ -1,5 +1,6 @@
 package servletPackage;
 
+
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -9,16 +10,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import databasePackage.Person;
-
 import beanPackage.SumAndSave;
 import beanPackage.TextResult;
+import databasePackage.Person;
 
 /**
- * Servlet implementation class Controller
+ * - Aufruf class SumAndSave (Ermittlung der Punkteanzahl, Speichern des Datensatzes)
+ * - Aufruf class TextResult (Ermittlung des Ausgabetextes)
+ * - Weiterleitung an result.jsp
+ * 
+ * @author Bergsocke
  */
+
 @WebServlet("/myController")
-public class Controller extends HttpServlet {
+public class PollController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	/**

@@ -4,6 +4,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import databasePackage.Person;
 
+/**
+ * - liefert erreichte Punkteanzahl
+ * - liefert nicht beantwortete Fragen
+ * - wenn alle Fragen beantwortet wurden, wird Abspeichern des Datensatzes veranlasst
+ * 
+ * @author Bergsocke
+ * 
+ */
 
 public class SumAndSave {
 	
@@ -38,8 +46,7 @@ public class SumAndSave {
 				txtWrongAnswers += i+1 + ", ";
 			}
 		}
-		
-		
+				
 		//User-Name uebernehmen
 		String userName = myRequest.getParameter("txtUsername");
 		

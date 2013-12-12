@@ -1,9 +1,14 @@
 package beanPackage;
 
+/**
+ * liefert den Auswertungstext anhand der erreichten Punkteanzahl
+ * 
+ * @author bergsocke
+ * 
+ */	
+
 public class TextResult {
-	
-	
-	
+		
 	public String outputText(int pSum, String pWrong){
 		
 		int sumResult = pSum;
