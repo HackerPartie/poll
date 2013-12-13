@@ -17,11 +17,8 @@ import java.sql.ResultSet;
 public class Person {
 	
 	private Connection connect = null;	
-	private PreparedStatement preparedStatementSave = null;	
-	private ResultSet resultSetRows = null;
-	private PreparedStatement preparedStatementsRows = null;
-	private ResultSet resultSetRowsQsum = null;
-	private PreparedStatement preparedStatementsQsum = null;
+	private PreparedStatement myPreparedStatement = null;	
+	private ResultSet myResultSet = null;
 
 	//Verbindungsaufbau zur Datenbank
 	public void connectDB() {
@@ -48,21 +45,21 @@ public class Person {
 			this.connectDB();
 			
 			//PreparedStatement für SQL-Befehl
-			preparedStatementSave = connect.prepareStatement("INSERT INTO person VALUES(default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			myPreparedStatement = connect.prepareStatement("INSERT INTO person VALUES(default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			
 			//Namen setzen
-			preparedStatementSave.setString(1, personName);
+			myPreparedStatement.setString(1, personName);
 
 			//Antworten setzen
 			for (int i = 0; i < personAnswers.length; i++) {
-				preparedStatementSave.setInt(i + 2, personAnswers[i]);
+				myPreparedStatement.setInt(i + 2, personAnswers[i]);
 			}
 
 			//Punkteanzahl setzen
-			preparedStatementSave.setInt(11, personSum);
+			myPreparedStatement.setInt(11, personSum);
 
 			//Ausfuehren des Speichern
-			preparedStatementSave.executeUpdate();
+			myPreparedStatement.executeUpdate();
 			
 
 		} catch (Exception e) {
@@ -74,7 +71,7 @@ public class Person {
 
 	}
 	
-	// get the average of all saved scores
+	// Ermittlung des Durchschnitts der Punkteanzahlen
 	public double getAverage() {
 
 		double numRows = 0.0;    //Anzahl der Datensaetze
@@ -86,19 +83,19 @@ public class Person {
 			this.connectDB();
 					
 			//Anzahl der Datensaetze ermitteln
-			preparedStatementsRows = connect.prepareStatement("SELECT COUNT(*) FROM person");
-			resultSetRows = preparedStatementsRows.executeQuery();
+			myPreparedStatement = connect.prepareStatement("SELECT COUNT(*) FROM person");
+			myResultSet = myPreparedStatement.executeQuery();
 			
-			while (resultSetRows.next()) {
-				numRows = resultSetRows.getInt("count(*)");
+			while (myResultSet.next()) {
+				numRows = myResultSet.getInt("count(*)");
 			}
 						
 			//Gesamtsumme der Punkteanzahl ermitteln
-			preparedStatementsQsum = connect.prepareStatement("SELECT qsum FROM poll.person");
-			resultSetRowsQsum = preparedStatementsQsum.executeQuery();
+			myPreparedStatement = connect.prepareStatement("SELECT qsum FROM poll.person");
+			myResultSet = myPreparedStatement.executeQuery();
 			
-			while (resultSetRowsQsum.next()) {
-				int tempSum = resultSetRowsQsum.getInt("qsum");	
+			while (myResultSet.next()) {
+				int tempSum = myResultSet.getInt("qsum");	
 				allScores += tempSum;
 			}
 			
@@ -122,26 +119,14 @@ public class Person {
 	private void close() {
 		try {
 			
-			if (resultSetRows != null) {
-				resultSetRows.close();
+			if (myResultSet != null) {
+				myResultSet.close();
 			}
 			
-			if (resultSetRowsQsum != null) {
-				resultSetRowsQsum.close();
+			if (myPreparedStatement != null) {
+				myPreparedStatement.close();
 			}
 			
-			if (preparedStatementSave != null) {
-				preparedStatementSave.close();
-			}
-			
-			if (preparedStatementsRows != null) {
-				preparedStatementsRows.close();
-			}
-			
-			if (preparedStatementsQsum != null) {
-				preparedStatementsQsum.close();
-			}
-
 			if (connect != null) {
 				connect.close();
 			}
