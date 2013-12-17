@@ -44,7 +44,7 @@ public class Person {
 			//Datenbankverbindung
 			this.connectDB();
 			
-			//PreparedStatement für SQL-Befehl
+			//PreparedStatement fï¿½r SQL-Befehl
 			myPreparedStatement = connect.prepareStatement("INSERT INTO person VALUES(default, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 			
 			//Namen setzen
@@ -115,6 +115,24 @@ public class Person {
 		}						
 	}
 	
+	/*
+	 * Eine debug method um alles in der db anzuzeigen
+	 */
+	void displayAll() {
+		try {
+			this.connectDB();
+			myPreparedStatement = connect.prepareStatement("SELECT name, qsum FROM person;");
+			myResultSet = myPreparedStatement.executeQuery();
+			
+			while (myResultSet.next()) {
+				String name = myResultSet.getString("name");
+				int qsum = myResultSet.getInt("qsum");
+				System.out.println(name + " "+ qsum);
+			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
+		}
+	}
 	
 	private void close() {
 		try {
