@@ -115,16 +115,16 @@ public class Person {
 
 			// Anzahl der Datensaetze ermitteln
 			myPreparedStatement = connect
-					.prepareStatement("SELECT COUNT(*) FROM person");
+					.prepareStatement("SELECT COUNT(*) AS count FROM person");
 			myResultSet = myPreparedStatement.executeQuery();
 
 			while (myResultSet.next()) {
-				numRows = myResultSet.getInt("count(*)");
+				numRows = myResultSet.getInt("count");
 			}
 
 			// Gesamtsumme der Punkteanzahl ermitteln
 			myPreparedStatement = connect
-					.prepareStatement("SELECT qsum FROM poll.person");
+					.prepareStatement("SELECT qsum FROM person");
 			myResultSet = myPreparedStatement.executeQuery();
 
 			while (myResultSet.next()) {
